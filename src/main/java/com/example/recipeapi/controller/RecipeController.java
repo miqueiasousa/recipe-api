@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.recipeapi.dto.IngredientDto;
 import com.example.recipeapi.dto.RecipeDto;
+import com.example.recipeapi.dto.mapper.IngredientMapper;
 import com.example.recipeapi.entity.Ingredient;
 import com.example.recipeapi.entity.Recipe;
 import com.example.recipeapi.service.IngredientService;
@@ -49,16 +50,11 @@ public class RecipeController {
   public Ingredient createIngredient(@PathVariable int recipeId, @RequestBody IngredientDto ingredientDto) {
     var recipe = recipeService.getRecipeById(recipeId);
 
-    var ingredient = new Ingredient();
+    var ingredient = IngredientMapper.toIngredient(ingredientDto);
 
-    ingredient.setName(ingredientDto.getName());
-    ingredient.setQuantity(ingredientDto.getQuantity());
-    ingredient.setMeasure(ingredientDto.getMeasure());
     ingredient.setRecipe(recipe);
 
-    var result = new ObjectMapper().convertValue(ingredient, Ingredient.class);
-
-    return ingredientService.createIngredient(result);
+    return ingredientService.createIngredient(ingredient);
   }
 
   @GetMapping("/recipes/{recipeId}/ingredients")
