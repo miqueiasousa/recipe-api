@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "ingredients")
 public class Ingredient {
@@ -26,6 +28,7 @@ public class Ingredient {
 
   @ManyToOne
   @JoinColumn(name = "recipe_id")
+  @JsonIgnoreProperties("ingredients")
   public Recipe recipe;
 
   public Ingredient() {

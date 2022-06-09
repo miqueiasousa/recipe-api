@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "recipes")
 public class Recipe {
@@ -32,6 +34,7 @@ public class Recipe {
   public int servings;
 
   @OneToMany(mappedBy = "recipe")
+  @JsonIgnoreProperties("recipe")
   public List<Ingredient> ingredients;
 
   public Recipe() {
